@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Signup Form | Markatlas Assignment</title>
+  <style>
+    /* Main setup for UI */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f1f3f4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    /* Main container styling for the form box */
+    .container {
+      background: #fff;
+      padding: 40px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      max-width: 450px;
+      width: 100%;
+    }
+
+    h2 {
+      margin-bottom: 10px;
+      color: #202124;
+    }
+
+    p.subtext {
+      font-size: 14px;
+      color: #5f6368;
+      margin-bottom: 20px;
+    }
+
+    /* Label styling for form  */
+    label {
+      display: block;
+      margin: 12px 0 4px;
+      font-weight: 500;
+      color: #202124;
+    }
+
+    /* Basic field styling  */
+    input {
+      width: 100%;
+      padding: 10px;
+      font-size: 14px;
+      border: 1px solid #dadce0;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #1a73e8;
+    }
+
+    /* Button styling with hover effect */
+    .btn {
+      margin-top: 20px;
+      width: 100%;
+      padding: 10px;
+      background-color: #1a73e8;
+      color: white;
+      font-weight: bold;
+      font-size: 14px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      background-color: #1669c1;
+    }
+
+    /* Error message text styling */
+    .error {
+      font-size: 12px;
+      color: #d93025;
+      margin-top: 4px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Sign up form</h2>
+
+    <!-- Signup form with validation -->
+    <form id="signupForm" novalidate>
+
+      <!-- First Name Input -->
+      <label for="firstName">First name</label>
+      <input type="text" id="firstName" placeholder="First name" required />
+      <div class="error" id="firstNameError">Enter at least 2 characters.</div>
+
+      <!-- Last Name Input -->
+      <label for="lastName">Last name</label>
+      <input type="text" id="lastName" placeholder="Last name" required />
+      <div class="error" id="lastNameError">Enter at least 2 characters.</div>
+
+      <!-- Phone Number Input -->
+      <label for="phone">Phone Number</label>
+      <input type="tel" id="phone" placeholder="10-digit phone number" required />
+      <div class="error" id="phoneError">Enter a valid 10-digit phone number.</div>
+
+      <!-- Email Input -->
+      <label for="email">Email</label>
+      <input type="email" id="email" placeholder="example@mail.com" required />
+      <div class="error" id="emailError">Enter a valid email.</div>
+
+      <!-- Password Input -->
+      <label for="password">Password</label>
+      <input type="password" id="password" placeholder="Password" required />
+      <div class="error" id="passwordError">Min 6 characters.</div>
+
+      <!-- Confirm Password Input -->
+      <label for="confirmPassword">Confirm Password</label>
+      <input type="password" id="confirmPassword" placeholder="Confirm password" required />
+      <div class="error" id="confirmPasswordError">Passwords must match.</div>
+
+      <!-- Submit Button -->
+      <button type="submit" class="btn">Sign up</button>
+    </form>
+  </div>
+
+  <script>
+    // Form validation logic on submit btn
+    document.getElementById("signupForm").addEventListener("submit", function (e) {
+      e.preventDefault(); // Prevent page reload on form submit
+
+      // Get references to form inputs
+      const firstName = document.getElementById("firstName");
+      const lastName = document.getElementById("lastName");
+      const phone = document.getElementById("phone");
+      const email = document.getElementById("email");
+      const password = document.getElementById("password");
+      const confirmPassword = document.getElementById("confirmPassword");
+
+      let valid = true; //its track if all inputs are valid
+
+      // Hide all error messages before new validation
+      document.querySelectorAll(".error").forEach(el => el.style.display = "none");
+
+      // First name must be at least 2 characters
+      if (firstName.value.trim().length < 2) {
+        document.getElementById("firstNameError").style.display = "block";
+        valid = false;
+      }
+
+      // Last name must be at least 2 characters
+      if (lastName.value.trim().length < 2) {
+        document.getElementById("lastNameError").style.display = "block";
+        valid = false;
+      }
+
+      // Phone number should be 10 digits only
+      const phonePattern = /^\d{10}$/;
+      if (!phonePattern.test(phone.value.trim())) {
+        document.getElementById("phoneError").style.display = "block";
+        valid = false;
+      }
+
+      // Validate standard email format
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailPattern.test(email.value.trim())) {
+        document.getElementById("emailError").style.display = "block";
+        valid = false;
+      }
+
+      // Password should be minimum 6 characters
+      if (password.value.length < 6) {
+        document.getElementById("passwordError").style.display = "block";
+        valid = false;
+      }
+
+      // Password and confirm password must match
+      if (password.value !== confirmPassword.value) {
+        document.getElementById("confirmPasswordError").style.display = "block";
+        valid = false;
+      }
+
+      // If all inputs are valid, show success message and reset form
+      if (valid) {
+        alert("Sign up successful!");
+        this.reset(); // Reset all input fields
+      }
+    });
+  </script>
+</body>
+</html>
